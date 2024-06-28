@@ -1,101 +1,56 @@
-# iot_project_summer24
+# Tutorial on How to Build a Temperature and Humidity Sensor 
 
-Template
+## Building a Temperature and Humidity Sensor with Raspberry Pi Pico W
 
-Please keep the total length of the tutorial below 25k characters. You can include code that is linked to a repository. Keep the code snippets in the tutorial short.
-Tutorial on how to build a temperature and humidity sensor
+## Elham Tayebi, et223dt
 
-Give a short and brief overview of what your project is about. What needs to be included:
+## Short Project Overview 
+In this project, we will focus on building a simple temperature and humidity IoT device using the Raspberry Pi Pico W and a DHT11 sensor. The tutorial involves computer setup, setting up the hardware and using a cloud-based service such as Adafruit io to monitor the data sent by the sensor. This project will take approximately 6-7 hours to complete. 
 
-    Title
-    Your name and student credentials (xx666x)
-    Short project overview
-    How much time it might take to do (approximation)
+## Objective 
+### Why I Chose This Project?
+I chose this project to learn the basics of IoT by building my first IoT device. This project helped me understand how to use a microcontroller (Raspberry Pi Pico W) and connect it to WiFi, how to connect sensors and use cloud services to send data. It is a simple way to get some experiences with IoT and prepare for more advanced projects in the future.
 
-Objective
+### What purpose does the project serve?
+The device serves as a starting point for developing more advance IoT devices. It monitors temperature and humidity, providing a foundation for projects like home automation or weather stations. The project provides a foundation for future IoT applications. 
 
-Describe why you have chosen to build this specific device. What purpose does it serve? What do you want to do with the data, and what new insights do you think it will give?
+### What Insights You Think It Will Give
 
-    Why you chose the project
-    What purpose does it serve
-    What insights you think it will give
+You will learn how to set up and use the Raspberry Pi Pico W, send data to cloud servers and build a basic IoT device by following this tutorial. 
 
-Material
+## Material
 
-Explain all material that is needed. All sensors, where you bought them and their specifications. Please also provide pictures of what you have bought and what you are using.
+| Hardware |Image| Price(SEK)/Link|
+|----------|----------|----------|
+|Raspberry Pi Pico W|    <img src="/Users/elham/Documents/Docs/Other/iot-project/iot_project_summer24/images/Rasp.jpg" />      |     [89](https://www.electrokit.com/raspberry-pi-pico-w)     |
+|Breadboard    |       <img src="/Users/elham/Documents/Docs/Other/iot-project/iot_project_summer24/images/breadboard.jpg" />   |      [49](https://www.electrokit.com/kopplingsdack-400-anslutningar)   |
+|Jumperwires     |      <img src="/Users/elham/Documents/Docs/Other/iot-project/iot_project_summer24/images/wires.png" />    |    [29](https://www.electrokit.com/labbsladd-20-pin-15cm-hane/hane)      |
+|DHT11    |        <img src="/Users/elham/Documents/Docs/Other/iot-project/iot_project_summer24/images/DHT11.jpg" />  |        [99](https://www.amazon.se/AZDelivery-breakout-modul-Temperatursensor-fuktighetssensor-kompatibel/dp/B07CK598SZ/ref=asc_df_B07CK598SZ/?tag=shpngadsglede-21&linkCode=df0&hvadid=604528123148&hvpos=&hvnetw=g&hvrand=1784732445850451503&hvpone=&hvptwo=&hvqmt=&hvdev=c&hvdvcmdl=&hvlocint=&hvlocphy=1012442&hvtargid=pla-709785471256&mcid=fa9321191f2b374fba918f1bb28c8eda&th=1)  |
+|Micro-USB cable    |  <img src="/Users/elham/Documents/Docs/Other/iot-project/iot_project_summer24/images/usb.png   " />  |   [39](https://www.electrokit.com/usb-kabel-a-hane-micro-b-5p-hane-1.8m)      |
+|Total    |          |   305       |
 
-    List of material
-    What the different things (sensors, wires, controllers) do - short specifications
-    Where you bought them and how much they cost
+Raspberry Pi Pico W is a microcontroller with WiFi which is used for IoT applications. The DHT11 sensor measures temperature and humidity. Jumper wires and breadboard are used to connect components. 
 
-    Example:
-    IoT Thing 	For this
-    Perhaps 	a table
-    is a 	jolly good idea?
+## Computer Setup
+The chosen IDE for this project is Visual Studio Code (VS Code) and the project has been developed on a macOS operating system. 
+You need also follow the following steps in order to prepare your computer for the project:
+1. [VS code](https://code.visualstudio.com/Download) can be downloaded and installed.
+2. [Node.js](https://nodejs.org/en/download/package-manager) can be downloaded and installed.
+3. A plug-in called Pymakr is also needed for the project. To install it, open VS code and access the Extensions manager by clicking on the left panel icon, navigating View >> Extensions, or simply by pressing Ctrl+shift+X. 
 
-    In this project I have chosen to work with the Pycom LoPy4 device as seen in Fig. 1, it's a neat little device programmed by MicroPython and has several bands of connectivity. The device has many digital and analog input and outputs and is well suited for an IoT project.
+### Flashing the Raspberry Pi Pico W
 
-    Image Not Showing Possible Reasons
+1. Download the latest MicroPython firmware(UF2 file) form [this website's ](https://micropython.org/download/RPI_PICO_W/) Releases section.
+2. Carefully, connect the micro-USB to the Pico W.
+3. Hold down the BOOTSEL button and connect the USB Type-A end of the cable to your computer. Release the button once connected.
+4. A new drive named RPI-RP2 will appear. Copy the UF2 file to this drive.
+5. Wait for the board to automatically disconnect (drive disappears).
+6. To verify the board is ready, disconnect and reconnect the USB cable.
 
-        The image file may be corrupted
-        The server hosting the image is unavailable
-        The image path is incorrect
-        The image format is not supported
+**Note:**  If your device is stuck, you can follow the firmware update procedure with [this special](https://datasheets.raspberrypi.com/soft/flash_nuke.uf2) firmware to completely erase the memory. Afterward, you can follow the previous steps to flash the Pico again. 
 
-    Learn More →
-    Fig. 1. LoPy4 with headers. Pycom.io
+## Putting everything together
+The DHT11 sensor has three pins: VCC, DATA and GND. Connect the VCC pin on the DHT11 sensor to the 3V3(out) on the Raspberry Pi Pico W. By doing so, you ensure that the sensor is powered correctly and can communicate with the Pico. Then, connect the GND pin of the DHT11 to any GND pin on the Raspberry Pi Pico W. Here, it is attached to pin 38. Finally, Link the DATA pin on DHT11 to GP13. Digital signals can be sent from sensor to the Pico by DATA pin. See the circuit diagram for a clearer understanding of how to connect all the components. 
 
-Computer setup
+ <img src="/Users/elham/Documents/Docs/Other/iot-project/iot_project_summer24/images/circuit.JPG" />  
 
-How is the device programmed. Which IDE are you using. Describe all steps from flashing the firmware, installing plugins in your favorite editor. How flashing is done on MicroPython. The aim is that a beginner should be able to understand.
-
-    Chosen IDE
-    How the code is uploaded
-    Steps that you needed to do for your computer. Installation of Node.js, extra drivers, etc.
-
-Putting everything together
-
-How is all the electronics connected? Describe all the wiring, good if you can show a circuit diagram. Be specific on how to connect everything, and what to think of in terms of resistors, current and voltage. Is this only for a development setup or could it be used in production?
-
-    Circuit diagram (can be hand drawn)
-    *Electrical calculations
-
-Platform
-
-Describe your choice of platform. If you have tried different platforms it can be good to provide a comparison.
-
-Is your platform based on a local installation or a cloud? Do you plan to use a paid subscription or a free? Describe the different alternatives on going forward if you want to scale your idea.
-
-    Describe platform in terms of functionality
-    *Explain and elaborate what made you choose this platform
-
-The code
-
-Import core functions of your code here, and don't forget to explain what you have done! Do not put too much code here, focus on the core functionalities. Have you done a specific function that does a calculation, or are you using clever function for sending data on two networks? Or, are you checking if the value is reasonable etc. Explain what you have done, including the setup of the network, wireless, libraries and all that is needed to understand.
-
-import this as that
-
-def my_cool_function():
-    print('not much here')
-
-s.send(package)
-
-# Explain your code!
-
-Transmitting the data / connectivity
-
-How is the data transmitted to the internet or local server? Describe the package format. All the different steps that are needed in getting the data to your end-point. Explain both the code and choice of wireless protocols.
-
-    How often is the data sent?
-    Which wireless protocols did you use (WiFi, LoRa, etc …)?
-    Which transport protocols were used (MQTT, webhook, etc …)
-    *Elaborate on the design choices regarding data transmission and wireless protocols. That is how your choices affect the device range and battery consumption.
-
-Presenting the data
-
-Describe the presentation part. How is the dashboard built? How long is the data preserved in the database?
-
-    Provide visual examples on how the dashboard looks. Pictures needed.
-    How often is data saved in the database.
-    *Explain your choice of database.
-    *Automation/triggers of the data.
