@@ -2,14 +2,14 @@ import ubinascii              # Conversions between binary data and various enco
 import machine                # To Generate a unique id from processor
 
 # Wireless network
-WIFI_SSID = 'Tele2_'
-WIFI_PASS = 'ej'
+WIFI_SSID = '*******'
+WIFI_PASS = '*******'
 
 # Adafruit IO (AIO) configuration
-AIO_SERVER = 'io.adafru'
+AIO_SERVER = 'i*******'
 AIO_PORT = 1883
-AIO_USER = ''
-AIO_KEY = 'aio_VKnq09sRk8LzwRxNXFgt1G'
+AIO_USER = '*******'
+AIO_KEY = '*******'
 AIO_CLIENT_ID = ubinascii.hexlify(machine.unique_id())  # Can be anything
-AIO_LIGHTS_FEED = 'elhtay/feeds/'
-AIO_RANDOMS_FEED = 'elhtay/feeds/r'
+AIO_LIGHTS_FEED = '*******'
+AIO_RANDOMS_FEED = '*******'
