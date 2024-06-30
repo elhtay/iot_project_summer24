@@ -1,15 +1,15 @@
-import time
-from mqtt import MQTTClient  # For use of MQTT protocol to talk to Adafruit IO
-from machine import Pin       # Define pin
-import config                   # Contain all keys used here
-from  wifiConnection  import WifiConnection       # Contains functions to connect/disconnect from WiFi 
+import time   
+from mqtt import MQTTClient                 # For use of MQTT protocol to talk to Adafruit IO
+from machine import Pin       
+import config                               # Contains configuration settings
+from  wifiConnection import WifiConnection       
 from dht import DHT11
 
-# Initialize constant values
+# Adafruit IO Feeds
 HUMIDITY_FEED= config.AIO_HUMIDITY_FEED
 TEMPERATURE_FEED= config.AIO_TEMPERATURE_FEED
 
-# Function to publish message to Adafruit IO MQTT server 
+# Function to send message to Adafruit IO
 def sendMessage(message, aioFeed):
 
     # some_number = random_integer(100)
@@ -33,7 +33,7 @@ except KeyboardInterrupt:
 # Try MQTT Connection
 try:
     print("Initializing MQTT Client")
-    # Use the MQTT protocol to connect to Adafruit IO
+    # Initialize MQTT Client
     client = MQTTClient(config.AIO_CLIENT_ID, 
                         config.AIO_SERVER,
                         config.AIO_PORT, 
@@ -43,41 +43,36 @@ try:
     print("MQTT Client initialized successfully")
 except OSError as e:
     print("MQTT Client initialization error:", e)
-    raise  # Re-raise the exception for further investigation
+    raise  # Raise an exception so the user can see the error
 except KeyboardInterrupt:
     print("Keyboard interrupt for MQTT Connection")
 
-# Subscribed messages will be delivered to this callback
+# Connect to Adafruit IO
 client.connect()
 
 print("Connected to %s, subscribed to %s and %s topics" % (config.AIO_SERVER, HUMIDITY_FEED,  TEMPERATURE_FEED))
 
 # Default value for number of data sent
 i = 0 
-try:                      # Code between try: and finally: may cause an error
-                          # so ensure the client disconnects the server if
-                          # that happens.
+try:              
     sensor = DHT11(Pin(13))
-    while  i < 5:              # Repeat this loop for 5 iterations (5 data points)
-        client.check_msg()# Action a message if one is received. Non-blocking.
+    while  i < 5:             # Send 5 data points to Adafruit IO
+        client.check_msg()    # Action a message if one is received
         try:   
             sensor.measure()
             
-            # Fetch sensor data 
+            # Get sensor data 
             temperatureData = sensor.temperature()
             humidityData = sensor.humidity()
             print('Sensor data successfully received, temperature:',temperatureData, 'humidity:', humidityData )
           
-            time.sleep(5) # Delay for 5 seconds
-            
+            time.sleep(5) 
             # Send Message humidity data to AIO
             sendMessage(humidityData, HUMIDITY_FEED) 
             print ("Humidity data sent to AIO")
-            
             # Send Message temperature data to AIO
             sendMessage(temperatureData, TEMPERATURE_FEED)
             print ("Temperature data sent to AIO")
-            
             print('Next data in five seconds...')
             print('-----------------------------------')
             print ('Number of data sent:', i+1)
@@ -85,10 +80,10 @@ try:                      # Code between try: and finally: may cause an error
             print('-----------------------------------')
             i+=1
 
-        except Exception as e: # If an exception is thrown ...
+        except Exception as e:
             print("An exception occurred:", e)
             continue
-# After the try: block is finished, run the code below to disconnect the client Wi-Fi and clean up.
+# Disconnect from Adafruit IO
 finally:
     client.disconnect()
     client = None
