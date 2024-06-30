@@ -52,5 +52,69 @@ You need also follow the following steps in order to prepare your computer for t
 ## Putting everything together
 The DHT11 sensor has three pins: VCC, DATA and GND. Connect the VCC pin on the DHT11 sensor to the 3V3(out) on the Raspberry Pi Pico W. By doing so, you ensure that the sensor is powered correctly and can communicate with the Pico. Then, connect the GND pin of the DHT11 to any GND pin on the Raspberry Pi Pico W. Here, it is attached to pin 38. Finally, Link the DATA pin on DHT11 to GP13. Digital signals can be sent from sensor to the Pico by DATA pin. See the circuit diagram for a clearer understanding of how to connect all the components. 
 
- <img src="images/circuit.JPG" width="250" height="300"   />  
+ <img src="images/circuit.JPG" width="250" height="300"/>
 
+
+## Platform
+
+The IoT platform used in this project is Adafruit IO, a cloud-based service ideal for data storage and visualization. In this project the free plan of Adafruit IO is used. 
+
+### Why Adafruit IO?
+
+- **Easy to Use**: Adafruit IO has a simple interface, making it easy for beginners to understand it.  
+- **Integration Support**: Adafruit IO can integrate with many devices and applications using MQTT APIs and REST, making it ideal for different IoT projects. 
+- **Free plan**: It offers a free plan for basic IoT projects, allowing users to start without any cost. This is great for small projects such as this project. 
+- **Customization Options**: The platform allows users to design feeds and dashboards, allowing for personalized data visualization to meet specific to the project requirements. 
+
+
+## Comparison with Other Platforms
+Another platform, called Datacake was also considered. However, Adafruit IO is more beginner-friendly and easier to understand, which made it the preferable choice for this project. Platforms like AWS IoT or Google Cloud IoT can be taken into consideration if the project requires more advanced features. These platforms provide comprehensive IoT solutions, but they could be more expensive and difficult. 
+
+## The Code 
+
+### WiFi Connection
+An important section of the code that links the Raspberry Pi Pico W to WiFi is shown below. In this section, we create a WiFi connection, manage power consumption and deal with connection timeouts. 
+
+<img src="images/wifi.png"/>  
+
+The code starts by importing the relevant modules and defines the WifiConnection class. The class's constructor initializes the WiFi credentials and interface. The connect method activates the WiFi, configures power management, and attempts to connect using the provided and password. If it is already connected, it will just return your current IP address. If not connected, timing out after 60 seconds. 
+
+This provides efficient WiFi connectivity by using power management and providing real-time connection status feedback. The code is a modified version of wifiConenction.py in this [GitHub repository](https://github.com/iot-lnu/pico-w/blob/main/network-examples/N2_WiFi_MQTT_Webhook_Adafruit/lib/wifiConnection.py). 
+
+### MQTT Communication
+
+The mqtt.py script handles MQTT communication on the Raspberry Pi Pico W. It handles connecting to a MQTT broker, subscribing to topics and establishing a connection to a MQTT broker. With methods for connecting, disconnecting, publishing and subscribing to a MQTT broker, the script defines a MQTTClient class. The code is essentially taken from the [GitHub repository](https://github.com/iot-lnu/pico-w/blob/main/network-examples/N2_WiFi_MQTT_Webhook_Adafruit/lib/mqtt.py )provided by IoT-LNU, for use with MicroPython on the Raspberry Pi Pico W. 
+
+## Explanation of Configuration Code
+The [config.py](https://github.com/elhtay/iot_project_summer24/blob/main/config.py) sets up the WiFi and Adafruit IO parameters, enabling the Pico W to connect to a WiFi network and interact with the Adafruit IO platform. Remember to replace the placeholders in the code with the actual values for your WiFi network, Adafruit IO credentials, and feed names.
+
+## Explanation of main.py
+
+The [main.py](https://github.com/elhtay/iot_project_summer24/blob/main/main.py) sets up the components needed to read temperature and humidity values from DHT11 sensor and transmit it to Adafruit IO. It begins by importing the necessary libraries, initializing the DHT11 sensor and setting up an Adafruit IO client using the provided credentials. The script establishes a WiFi connection using the WifiConnection class and initializes the MQTT client to connect to Adafruit IO. When connected, it loops to read temperature and humidity data from the sensor, publishing this data to the specified Adafruit IO feeds. Finally, the script disconnects from Adafruit IO and the WiFi network once the data has been transmitted. 
+
+## Transmitting the Data / Connectivity
+
+As mentioned earlier, the data transmission to Adafruit IO server has been implemented using the MQTT protocol over a WiFi connection. The data is transmitted every 5 seconds. WiFi was chosen for its ease of setup and availability. The MQTT protocol was used fpr its efficient data handling. 
+
+## Presenting the data
+
+The following image shows dashboard for the Temperature and Humidity Sensor project, which is build to display real-time data in a user-friendly manner. The data is collected by the sensor and sent to the database, where it is stored and retrieved for display on the dashboard. 
+The following visual examples has been used:
+1. Temperature Graph: The graph shows the temperature variations over time.
+2. Humidity Indicator: This displays the current humidity level as a percentage.
+3. Temperature Gauge: The gauge shows the current temperature value. However, it was not possible to make it display the numerical value directly on the gauge.
+
+<img src="images/dashboard.png"/>  
+
+## Finalizing the design
+
+This project involved setting up the hardware, writing the necessary code, transmit sensor reading to Adafruit IO and visualization of the data. The project successfully measures and displays temperature and humidity data. The sensor is connected to the Pico W and processes the data and sends it to the cloud service. Overall, the project went well, the setup was straightforward and the sensor provided accurate readings. I had struggled when connecting to WiFi and managed it by troubleshooting various issues, such as incorrect credentials and network settings. However, there are always areas for improvement:
+1. Enhance Features: Adding features like alerts or integrating with other IoT devices would enhance the project's functionality. 
+2. Code Efficiency: The code could be optimized further fir better performance and readability. 
+
+These images show the connection between the Raspberry Pi Pico W and the temperature and humidity sensor, illustrating the final configuration of the project.  
+
+
+<img src="images/setup1.JPG" width="400" height="400"/>  
+<img src="images/setup2.JPG" width="300" height="300"/>  
+<img src="images/setup3.JPG" width="300" height="300"/>  
