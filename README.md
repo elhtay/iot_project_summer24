@@ -4,8 +4,8 @@
 
 ## Elham Tayebi, et223dt
 
-## Short Project Overview 
-In this project, we will focus on building a simple temperature and humidity IoT device using the Raspberry Pi Pico W and a DHT11 sensor. The tutorial involves computer setup, setting up the hardware and using a cloud-based service such as Adafruit io to monitor the data sent by the sensor. This project will take approximately 6-7 hours to complete. 
+## Short Project Description 
+In this project, we will focus on building a simple temperature and humidity IoT device using the Raspberry Pi Pico W and a DHT11 sensor. The tutorial involves computer setup, setting up the hardware and using a cloud-based service such as Adafruit IO to monitor the data sent by the sensor. This project will take approximately 6-8 hours to complete. 
 
 ## Objective 
 ### Why I Chose This Project?
@@ -66,13 +66,13 @@ The IoT platform used in this project is [Adafruit IO](https://io.adafruit.com/)
 - **Customization Options**: The platform allows users to design feeds and dashboards, allowing for personalized data visualization to meet specific to the project requirements. 
 
 
-## Comparison with Other Platforms
+### Comparison with Other Platforms
 Another platform, called Datacake was also considered. However, Adafruit IO is more beginner-friendly and easier to understand, which made it the preferable choice for this project. Platforms like AWS IoT or Google Cloud IoT can be taken into consideration if the project requires more advanced features. These platforms provide comprehensive IoT solutions, but they could be more expensive and difficult. 
 
 ## The Code 
 
 ### WiFi Connection
-An important section of the code that links the Raspberry Pi Pico W to WiFi is shown below. In this section, we create a WiFi connection, manage power consumption and deal with connection timeouts. Below, you can find the script for WiFi connection.
+An important section of the code that links the Raspberry Pi Pico W to WiFi is shown below. In this section, we create a WiFi connection, manage power consumption and deal with connection timeouts. Below, you can find a part of the script for WiFi connection.
 
 <img src="images/wifi.png"/>  
 
@@ -104,6 +104,9 @@ WiFi is an excellent choice for use within home or office environments. However,
 ### Security Perspective
 Using WiFi for data transmission offers WPA2 encryption. Additionally, the MQTT protocol uses username/password authentication and SSL/TLS encryption to ensure data security.
 
+
+## Presenting the data
+
 ### How to setup
 
 1. Go to the [Adafruit IO website](https://io.adafruit.com/).
@@ -119,23 +122,22 @@ Using WiFi for data transmission offers WPA2 encryption. Additionally, the MQTT 
 11. Navigate to "Dashboard settings" and click on "Create a new Block"
 12. You can now choose your preferred block type to present the data, such as a line chart or a gauge.
 
-## Presenting the data
-
-The following image shows dashboard for the Temperature and Humidity Sensor project, which is build to display real-time data in a user-friendly manner. The data is collected by the sensor and sent to the database where it is stored and retrieved for display on the dashboard. 
+The following images show dashboard for the Temperature and Humidity Sensor project, which is build to display real-time data in a user-friendly manner. The data is collected by the sensor and sent to the database where it is stored and retrieved for display on the dashboard. 
 The following visual examples has been used:
 1. Temperature Graph: The graph shows the temperature variations over time.
 2. Humidity Indicator: This displays the current humidity level as a percentage.
-3. Temperature Gauge: The gauge shows the current temperature value. However, it was not possible to make it display the numerical value directly on the gauge.
+3. Temperature Gauge: The gauge shows the current temperature value.
 
-<img src="images/dashboard.png"/>  
+<img src="images/dash.png" width="450" height="250"/>  <img src="images/f.png" width="200" height="260"/>  
 
 ## Finalizing the design
 
 This project involved setting up the hardware, writing the necessary code, transmit sensor reading to Adafruit IO and visualization of the data. The project successfully measures and displays temperature and humidity data. The sensor is connected to the Pico W and processes the data and sends it to the cloud service. Overall, the project went well, the setup was straightforward and the sensor provided accurate readings. I had struggled when connecting to WiFi and managed it by troubleshooting various issues, such as incorrect credentials and network settings. However, there are always areas for improvement:
-1. Enhance Features: Adding features like alerts or integrating with other IoT devices would enhance the project's functionality. 
-2. Code Efficiency: The code could be optimized further fir better performance and readability. 
 
-These images show the connection between the Raspberry Pi Pico W and the temperature and humidity sensor, illustrating the final configuration of the project.  
+1. Enhance Features: Adding features like alerts or integrating with other IoT devices would enhance the project's functionality. 
+2. Code Efficiency: The code could be optimized further for better performance and readability. 
+
+The following pictures show the connection between the Raspberry Pi Pico W and the temperature and humidity sensor, illustrating the final configuration of the project.  
 
 
 <img src="images/setup1.JPG" width="400" height="400"/>  
