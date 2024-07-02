@@ -20,16 +20,15 @@ You will learn how to set up and use the Raspberry Pi Pico W, send data to cloud
 
 ## Material
 
-| Hardware |Image| Price(SEK)/Link|
-|----------|----------|----------|
-|Raspberry Pi Pico W|    <img src="images/Rasp.jpg" width="200" height="200"   />|    [89](https://www.electrokit.com/raspberry-pi-pico-w)     |
-|Breadboard    |       <img src="images/breadboard.jpg" width="200" height="200"  />   |      [49](https://www.electrokit.com/kopplingsdack-400-anslutningar)   |
-|Jumperwires     |      <img src="images/wires.png" width="200" height="200"   />    |    [29](https://www.electrokit.com/labbsladd-20-pin-15cm-hane/hane)      |
-|DHT11    |        <img src="images/DHT11.jpg" width="200" height="200"  />  |        [99](https://www.amazon.se/AZDelivery-breakout-modul-Temperatursensor-fuktighetssensor-kompatibel/dp/B07CK598SZ/ref=asc_df_B07CK598SZ/?tag=shpngadsglede-21&linkCode=df0&hvadid=604528123148&hvpos=&hvnetw=g&hvrand=1784732445850451503&hvpone=&hvptwo=&hvqmt=&hvdev=c&hvdvcmdl=&hvlocint=&hvlocphy=1012442&hvtargid=pla-709785471256&mcid=fa9321191f2b374fba918f1bb28c8eda&th=1)  |
-|Micro-USB cable    |  <img src="images/usb.png" width="200" height="200"  />  |   [39](https://www.electrokit.com/usb-kabel-a-hane-micro-b-5p-hane-1.8m)      |
-|Total    |          |   305       |
+| Hardware |Image| Price(SEK)/Link|Description|
+|----------|----------|----------|----------|
+|Raspberry Pi Pico W|    <img src="images/Rasp.jpg" width="300" height="100"   />|    [89](https://www.electrokit.com/raspberry-pi-pico-w)     |Raspberry Pi Pico W is a microcontroller with WiFi which is used for IoT applications. |
+|Breadboard    |       <img src="images/breadboard.jpg" width="300" height="100"  />   |      [49](https://www.electrokit.com/kopplingsdack-400-anslutningar)   | The breadboard is used to connect components. |
+|Jumperwires     |      <img src="images/wires.png" width="300" height="100"   />    |    [29](https://www.electrokit.com/labbsladd-20-pin-15cm-hane/hane)      | Jumper wires are also used to connect the components.|
+|DHT11    |        <img src="images/DHT11.jpg" width="300" height="100"  />  |        [99](https://www.amazon.se/AZDelivery-breakout-modul-Temperatursensor-fuktighetssensor-kompatibel/dp/B07CK598SZ/ref=asc_df_B07CK598SZ/?tag=shpngadsglede-21&linkCode=df0&hvadid=604528123148&hvpos=&hvnetw=g&hvrand=1784732445850451503&hvpone=&hvptwo=&hvqmt=&hvdev=c&hvdvcmdl=&hvlocint=&hvlocphy=1012442&hvtargid=pla-709785471256&mcid=fa9321191f2b374fba918f1bb28c8eda&th=1)  |The DHT11 sensor measures temperature and humidity.|
+|Micro-USB cable    |  <img src="images/usb.png" width="300" height="100"  />  |   [39](https://www.electrokit.com/usb-kabel-a-hane-micro-b-5p-hane-1.8m)      |The Micro-USB cable is used to connect the device to the computer.
+|Total    |          |       305  ||
 
-Raspberry Pi Pico W is a microcontroller with WiFi which is used for IoT applications. The DHT11 sensor measures temperature and humidity. Jumper wires and breadboard are used to connect components. 
 
 ## Computer Setup
 The chosen IDE for this project is Visual Studio Code (VS Code) and the project has been developed on a macOS operating system. 
@@ -50,14 +49,14 @@ You need also follow the following steps in order to prepare your computer for t
 **Note:**  If your device is stuck, you can follow the firmware update procedure with [this special](https://datasheets.raspberrypi.com/soft/flash_nuke.uf2) firmware to completely erase the memory. Afterward, you can follow the previous steps to flash the Pico again. 
 
 ## Putting everything together
-The DHT11 sensor has three pins: VCC, DATA and GND. Connect the VCC pin on the DHT11 sensor to the 3V3(out) on the Raspberry Pi Pico W. By doing so, you ensure that the sensor is powered correctly and can communicate with the Pico. Then, connect the GND pin of the DHT11 to any GND pin on the Raspberry Pi Pico W. Here, it is attached to pin 38. Finally, Link the DATA pin on DHT11 to GP13. Digital signals can be sent from sensor to the Pico by DATA pin. See the circuit diagram for a clearer understanding of how to connect all the components. 
+The DHT11 sensor has three pins: VCC, DATA and GND. Connect the VCC pin on the DHT11 sensor to the 3V3(out) on the Raspberry Pi Pico W. The 3v3 pin is the power pin and it is necessary for the operation of the DHT11 sensor. By doing so, you ensure that the sensor is powered correctly and can communicate with the Pico. Then, connect the GND pin of the DHT11 to any GND pin on the Raspberry Pi Pico W. Here, it is attached to pin 38. The GND (Ground) pin completes the electrical circuit and provides a return path for the current. Finally, Link the DATA pin on DHT11 to GP13. Digital signals can be sent from sensor to the Pico by DATA pin. The GP13 pin is configured to read the digital signals sent from the sensor. See the circuit diagram for a clearer understanding of how to connect all the components. 
 
  <img src="images/circuit.JPG" width="250" height="300"/>
 
 
 ## Platform
 
-The IoT platform used in this project is Adafruit IO, a cloud-based service ideal for data storage and visualization. In this project the free plan of Adafruit IO is used. 
+The IoT platform used in this project is [Adafruit IO](https://io.adafruit.com/), a cloud-based service ideal for data storage and visualization. In this project the free plan of Adafruit IO is used. 
 
 ### Why Adafruit IO?
 
@@ -83,7 +82,7 @@ This provides efficient WiFi connectivity by using power management and providin
 
 ### MQTT Communication
 
-The mqtt.py script handles MQTT communication on the Raspberry Pi Pico W. It handles connecting to a MQTT broker, subscribing to topics and establishing a connection to a MQTT broker. With methods for connecting, disconnecting, publishing and subscribing to a MQTT broker, the script defines a MQTTClient class. The code is essentially taken from the [GitHub repository](https://github.com/iot-lnu/pico-w/blob/main/network-examples/N2_WiFi_MQTT_Webhook_Adafruit/lib/mqtt.py )provided by IoT-LNU, for use with MicroPython on the Raspberry Pi Pico W. 
+The mqtt.py script handles MQTT communication on the Raspberry Pi Pico W. It handles connecting to a MQTT broker, subscribing to topics and establishing a connection to a MQTT broker. With methods for connecting, disconnecting, publishing and subscribing to a MQTT broker, the script defines a MQTTClient class. The code is essentially taken from the [GitHub repository](https://github.com/iot-lnu/pico-w/blob/main/network-examples/N2_WiFi_MQTT_Webhook_Adafruit/lib/mqtt.py ) provided by IoT-LNU, for use with MicroPython on the Raspberry Pi Pico W. 
 
 ## Explanation of Configuration Code
 The [config.py](https://github.com/elhtay/iot_project_summer24/blob/main/config.py) sets up the WiFi and Adafruit IO parameters, enabling the Pico W to connect to a WiFi network and interact with the Adafruit IO platform. Remember to replace the placeholders in the code with the actual values for your WiFi network, Adafruit IO credentials, and feed names.
@@ -92,9 +91,27 @@ The [config.py](https://github.com/elhtay/iot_project_summer24/blob/main/config.
 
 The [main.py](https://github.com/elhtay/iot_project_summer24/blob/main/main.py) sets up the components needed to read temperature and humidity values from DHT11 sensor and transmit it to Adafruit IO. It begins by importing the necessary libraries, initializing the DHT11 sensor and setting up an Adafruit IO client using the provided credentials. The script establishes a WiFi connection using the WifiConnection class and initializes the MQTT client to connect to Adafruit IO. When connected, it loops to read temperature and humidity data from the sensor, publishing this data to the specified Adafruit IO feeds. Finally, the script disconnects from Adafruit IO and the WiFi network once the data has been transmitted. 
 
+
+<img src="images/main2.png"/> 
+
 ## Transmitting the Data / Connectivity
 
-As mentioned earlier, the data transmission to Adafruit IO server has been implemented using the MQTT protocol over a WiFi connection. The data is transmitted every 5 seconds. WiFi was chosen for its ease of setup and availability. The MQTT protocol was used fpr its efficient data handling. 
+As mentioned earlier, the data transmission to Adafruit IO server has been implemented using the MQTT protocol over a WiFi connection. The data is transmitted every 5 seconds. WiFi was chosen for its ease of setup and availability. The MQTT protocol was used for its efficient data handling. 
+
+### How to setup
+
+1. Go to the [Adafruit IO website](https://io.adafruit.com/).
+2. Create a free account if you don't already have one.
+3. Log in to your Adafruit account.
+4. Navigate to "Feeds" and click on "new feed".
+5. Name your feed (for example "Temperature") and save it.
+6. Click on the key symbol in the upper right corner of the page.
+7. Copy the Active Key. You will need this key to send data from your device to Adafruit IO.
+8. Use the AIO key in your code to connect the Paspberry Pi Pico W to Adafruit IO. 
+9. Then Navigate to "Dashboards" and choose "new Dashboard".
+10. Give your dashboad a name (for example: Humidity&Temperature).
+11. Navigate to "Dashboard settings" and click on "Create a new Block"
+12. You can now choose your preferred block type to present the data, such as a line chart or a gauge.
 
 ## Presenting the data
 
