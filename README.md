@@ -72,7 +72,7 @@ Another platform, called Datacake was also considered. However, Adafruit IO is m
 ## The Code 
 
 ### WiFi Connection
-An important section of the code that links the Raspberry Pi Pico W to WiFi is shown below. In this section, we create a WiFi connection, manage power consumption and deal with connection timeouts. 
+An important section of the code that links the Raspberry Pi Pico W to WiFi is shown below. In this section, we create a WiFi connection, manage power consumption and deal with connection timeouts. Below, you can find the script for WiFi connection.
 
 <img src="images/wifi.png"/>  
 
@@ -89,14 +89,20 @@ The [config.py](https://github.com/elhtay/iot_project_summer24/blob/main/config.
 
 ## Explanation of main.py
 
-The [main.py](https://github.com/elhtay/iot_project_summer24/blob/main/main.py) sets up the components needed to read temperature and humidity values from DHT11 sensor and transmit it to Adafruit IO. It begins by importing the necessary libraries, initializing the DHT11 sensor and setting up an Adafruit IO client using the provided credentials. The script establishes a WiFi connection using the WifiConnection class and initializes the MQTT client to connect to Adafruit IO. When connected, it loops to read temperature and humidity data from the sensor, publishing this data to the specified Adafruit IO feeds. Finally, the script disconnects from Adafruit IO and the WiFi network once the data has been transmitted. 
+The [main.py](https://github.com/elhtay/iot_project_summer24/blob/main/main.py) sets up the components needed to read temperature and humidity values from DHT11 sensor and transmit it to Adafruit IO. It begins by importing the necessary libraries, initializing the DHT11 sensor and setting up an Adafruit IO client using the provided credentials. The script establishes a WiFi connection using the WifiConnection class and initializes the MQTT client to connect to Adafruit IO. When connected, it loops to read temperature and humidity data from the sensor and publishes this data to the specified Adafruit IO feeds. Finally, the script disconnects from Adafruit IO and the WiFi network once the data has been transmitted. Below, you can find the loop part of the script for main.py.
 
 
 <img src="images/main2.png"/> 
 
 ## Transmitting the Data / Connectivity
 
-As mentioned earlier, the data transmission to Adafruit IO server has been implemented using the MQTT protocol over a WiFi connection. The data is transmitted every 5 seconds. WiFi was chosen for its ease of setup and availability. The MQTT protocol was used for its efficient data handling. 
+As mentioned earlier, the data transmission to Adafruit IO server has been implemented using the MQTT protocol over a WiFi connection. The data is transmitted every 5 seconds. WiFi was chosen for its ease of setup and widley available, which makes it a suitable choice for most users. The MQTT protocol was used for its efficient data handling. MQTT is ideal for sending small data packets such as temperature and humidity data. 
+
+### Impact on Device Range 
+WiFi is an excellent choice for use within home or office environments. However, its range can be limited in larger areas. For longer-range communication needs, LoRaWAN could be a more suitable option.
+
+### Security Perspective
+Using WiFi for data transmission offers WPA2 encryption. Additionally, the MQTT protocol uses username/password authentication and SSL/TLS encryption to ensure data security.
 
 ### How to setup
 
@@ -115,7 +121,7 @@ As mentioned earlier, the data transmission to Adafruit IO server has been imple
 
 ## Presenting the data
 
-The following image shows dashboard for the Temperature and Humidity Sensor project, which is build to display real-time data in a user-friendly manner. The data is collected by the sensor and sent to the database, where it is stored and retrieved for display on the dashboard. 
+The following image shows dashboard for the Temperature and Humidity Sensor project, which is build to display real-time data in a user-friendly manner. The data is collected by the sensor and sent to the database where it is stored and retrieved for display on the dashboard. 
 The following visual examples has been used:
 1. Temperature Graph: The graph shows the temperature variations over time.
 2. Humidity Indicator: This displays the current humidity level as a percentage.
